@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Server Connectivity Checker</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+</head>
+<script>
+function callPingFunction() {
+    $('.show-data').html("");
+    var ipStr= $('#ipVal').val();
+    $.ajax({
+              url: "/ping",
+              type: "POST",
+              data: {ip:ipStr}
+          }).done(function(response) {
+                var html= "";
+                response = response.result;
+                html+="<p>"+response+"<p>"
+                html +="<br><br>";
+                $(".show-data").append(html);
+            });
+};
+  </script>
+<body>
+    <p>
+        <h1>Server Connectivity Checker</h1>
+        <br>
+            IP Address <input type="text" id="ipVal" name="IP"> <button id="clicked" onclick="callPingFunction()">Submit</button>
+    </p>
+    <br>
+    <br>
+    <br>
+    <br>
+    <h2><b>Ping Results:<b></h2>
+    <div style="color:red;" class="show-data" >
+    </div>
+</body>
+</html>

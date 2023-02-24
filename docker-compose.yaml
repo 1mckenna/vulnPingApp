@@ -1,0 +1,29 @@
+# docker-compose.yaml
+version: '3'
+
+services:
+  web:
+    hostname: websrv
+    build:
+      context: ./web
+      dockerfile: pingApp.Dockerfile
+    ports:
+      - '5000:5000'
+    networks:
+      demo_net:
+        ipv4_address: 172.22.0.2
+  attacker:
+    hostname: attacker
+    build:
+      context: ./attacker
+      dockerfile: attacker.Dockerfile
+    networks:
+      demo_net:
+        ipv4_address: 172.22.0.22
+
+networks:
+  demo_net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.22.0.0/24
